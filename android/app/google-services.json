@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "548881226627",
+    "project_id": "pj-time",
+    "storage_bucket": "pj-time.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548881226627:android:1a64b9e3cd0b9a81eaf4b6",
+        "android_client_info": {
+          "package_name": "com.example.apptime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548881226627-tgm9pr439f7pj4nuqdtlasn130bdreek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGywotmmZp493SfHk320qCal4KcLZHVnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548881226627-tgm9pr439f7pj4nuqdtlasn130bdreek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
