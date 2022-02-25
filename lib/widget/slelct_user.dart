@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:apptime/widget/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,12 @@ class _SelectUserState extends State<SelectUser> {
       width: screen * 0.65,
       height: 50,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        },
         child: const Text('chakkarin eammi'),
         style: ElevatedButton.styleFrom(
           primary: MyStyle().aColor,
