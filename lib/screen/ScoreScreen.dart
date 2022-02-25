@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_import, prefer_const_constructors
+
 import 'package:apptime/Subjects/Math.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

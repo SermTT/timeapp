@@ -9,6 +9,7 @@ class TeacherModel {
   String sid;
   String teaname;
   String teanum;
+  String uid;
   TeacherModel({
     required this.cid,
     required this.classid,
@@ -18,6 +19,7 @@ class TeacherModel {
     required this.sid,
     required this.teaname,
     required this.teanum,
+    required this.uid,
   });
 
   
@@ -32,6 +34,7 @@ class TeacherModel {
       'sid': sid,
       'teaname': teaname,
       'teanum': teanum,
+      'uid': uid,
     };
   }
 
@@ -45,6 +48,7 @@ class TeacherModel {
       sid: map['sid'] ?? '',
       teaname: map['teaname'] ?? '',
       teanum: map['teanum'] ?? '',
+      uid: map['uid'] ?? '',
     );
   }
 

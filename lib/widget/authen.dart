@@ -1,3 +1,7 @@
+import 'package:apptime/model/TeacherModel.dart';
+import 'package:apptime/teacher/TeaHomeScreen.dart';
+import 'package:apptime/widget/slelct_user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +18,9 @@ class _AuthenState extends State<Authen> {
   late double screen;
   late bool statusRedEye = true;
   late String user, password;
+  
 
-  @override
+  
   Widget build(BuildContext context) {
     screen = MediaQuery.of(context).size.width;
     // ignore: avoid_print
@@ -167,8 +172,11 @@ class _AuthenState extends State<Authen> {
     await Firebase.initializeApp().then((value) async {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: user, password: password)
-          .then((value) => Navigator.pushNamedAndRemoveUntil(
-              context, '/select', (route) => false))
+          .then((value) {
+            
+              Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => SelectUser()));
+          })
           // ignore: invalid_return_type_for_catch_error
           .catchError((value) => normalDialog(context, value.message));
     });
