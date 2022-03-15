@@ -1,11 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-
 import '../screen/CheckstatusScreen.dart';
 import '../screen/ContactScreen.dart';
 import '../screen/HomeScreen.dart';
 import '../screen/ScoreScreen.dart';
 import '../screen/TableScreen.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

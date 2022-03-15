@@ -7,14 +7,14 @@ import 'package:apptime/utility/style.dart';
 import '../model/Usermodel.dart';
 import '../model/score.dart';
 
-class thaiScore extends StatefulWidget {
-  const thaiScore({Key? key}) : super(key: key);
+class comScore extends StatefulWidget {
+  const comScore({Key? key}) : super(key: key);
 
   @override
-  _thaiScoreState createState() => _thaiScoreState();
+  _comScoreState createState() => _comScoreState();
 }
 
-class _thaiScoreState extends State<thaiScore> {
+class _comScoreState extends State<comScore> {
   UserModel? userModel;
   List<ScoreModel> scoreModel = [];
   String? score, note;
@@ -41,7 +41,7 @@ class _thaiScoreState extends State<thaiScore> {
       await FirebaseFirestore.instance
           .collection('students')
           .doc(uidM)
-          .collection('thai')
+          .collection('computer')
           .get()
           .then((value) {
         for (var item in value.docs) {
@@ -115,7 +115,7 @@ class _thaiScoreState extends State<thaiScore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ภาษาไทย"),
+        title: const Text("คอมพิวเตอร์"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(

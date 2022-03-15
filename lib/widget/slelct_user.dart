@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:apptime/model/TeacherModel.dart';
+import 'package:apptime/model/Usermodel.dart';
 import 'package:apptime/teacher/TeaHomeScreen.dart';
 import 'package:apptime/widget/navbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,15 +23,25 @@ class _SelectUserState extends State<SelectUser> {
   late double screen;
   List<TeacherModel> teacherModel = [];
   String? uid;
+  UserModel? userModel;
 
   Future findTeacher () async {
     await FirebaseAuth.instance.authStateChanges().listen((event) async {
       uid = event!.uid;
+      await FirebaseFirestore.instance
+          .collection('students')
+          .doc(uid)
+          .get()
+          .then((value) {
+        setState(() {
+          userModel = UserModel.fromMap(value.data()!);
+        });
+      });
       print("##$uid");
       await FirebaseFirestore.instance.collection('teachers').get().then((value) {
         for (var item in value.docs) {
           TeacherModel model = TeacherModel.fromMap(item.data());
-          print("##${model.uid}");
+          // print("##${model.uid}");
           if(!mounted)return;
           if (uid == model.uid) {
             setState(() {
@@ -103,7 +114,7 @@ class _SelectUserState extends State<SelectUser> {
             MaterialPageRoute(builder: (context) => const MainScreen()),
           );
         },
-        child: const Text('chakkarin eammi'),
+        child:userModel==null?Text('รอสักครู่...'): Text('${userModel!.stuname} ${userModel!.stulastname}'),
         style: ElevatedButton.styleFrom(
           primary: MyStyle().aColor,
           shape: RoundedRectangleBorder(

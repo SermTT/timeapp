@@ -1,7 +1,9 @@
+// ignore_for_file: await_only_futures, annotate_overrides, avoid_print, avoid_unnecessary_containers, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:apptime/utility/style.dart';
 import '../model/Usermodel.dart';
 import '../model/score.dart';
 
@@ -63,7 +65,7 @@ class _mathScoreState extends State<mathScore> {
   Widget listScore() {
     return Container(
       color: Colors.white,
-      height: 550,
+      height: 500,
       width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(
         child: Column(
@@ -98,7 +100,7 @@ class _mathScoreState extends State<mathScore> {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -106,6 +108,7 @@ class _mathScoreState extends State<mathScore> {
           }).toList(),
         ),
       ),
+      
     );
   }
 
@@ -113,6 +116,15 @@ class _mathScoreState extends State<mathScore> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("คณิตศาสตร์"),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+              colors: <Color>[MyStyle().lightColor, MyStyle().primaryColor],
+            ),
+          ),
+        ),
       ),
       body: scoreModel == null
           ? Center(
@@ -155,6 +167,7 @@ class _mathScoreState extends State<mathScore> {
                         ),
                         SizedBox(height: 20),
                         listScore(),
+                        Text('0 คะแนนคือการไม่ส่งงาน'),
                       ],
                     ),
                   ),

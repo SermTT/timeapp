@@ -9,7 +9,9 @@ class MyStyle {
   Color bColor = const Color(0xff000000);
   Color aColor = const Color(0xffcc5353);
 
-  Widget showLogo() => Image.asset('images/school.png');
+  Widget showLogo() => Image.asset('images/logo.png',width: 330,);
+  Widget showLogoStu() => Image.asset('images/student.png',width: 150,);
+  Widget showLogoTea() => Image.asset('images/teacher.png',width: 150,);
 
   Widget titleH1(String string) => Text(
         string,
@@ -24,6 +26,24 @@ class MyStyle {
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+      );
+
+      Widget titleH2g(String string) => Text(
+        string,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: Colors.green,
+        ),
+      );
+      Widget titleH2r(String string) => Text(
+        string,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: Colors.red,
         ),
       );
 

@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, await_only_futures, avoid_print, file_names, unused_field, unnecessary_string_interpolations
 
+import 'package:apptime/widget/slelct_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:apptime/utility/style.dart';
 import '../model/Usermodel.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,51 +48,81 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: userModel == null? Center(child: CircularProgressIndicator(),) : Center(
-        
-        // ignore: unnecessary_string_interpolations
-        child: Container(
-          padding: EdgeInsets.only(top:70,left: 30,right: 30),
-          child: Column(
-            children: [
-              Text('${userModel!.stuname}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      body: userModel == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Center(
+              // ignore: unnecessary_string_interpolations
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[MyStyle().primaryColor, MyStyle().wColor],
+                  ),
+                ),
+                padding: EdgeInsets.only(top: 70, left: 30, right: 30),
+                child: Column(
+                  children: [
+                    MyStyle().showLogo(),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    MyStyle().showLogoStu(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      'ชื่อ : ${userModel!.stuname} ${userModel!.stulastname}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'รหัสประจำตัว : ${userModel!.stunum}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'ชั้นปี : ${userModel!.nroom}/${userModel!.croom}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'อีเมล : ${userModel!.email}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SelectUser()));
+                      },
+                      child: Text('กลับหน้าเลือกนักเรียน'),
+                      style: ElevatedButton.styleFrom(
+                        primary: MyStyle().aColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              ),
-              Text('${userModel!.stunum}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),),
-              Text('${userModel!.email}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('${userModel!.nroom}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),),
-                  Text("/"),
-                  Text('${userModel!.croom}',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),),
-                ],
-              )
-            ],
-          ),
-        ),
-        
-        
-      ),
+            ),
     );
   }
 }

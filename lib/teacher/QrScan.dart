@@ -1,34 +1,14 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, curly_braces_in_flow_control_structures, prefer_const_constructors
 
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-void main() => runApp(const MaterialApp(home: QrScan()));
-
-class QrScan extends StatelessWidget {
-  const QrScan({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Demo Home Page')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const QRViewExample(),
-            ));
-          },
-          child: const Text('qrView'),
-        ),
-      ),
-    );
-  }
-}
+void main() => runApp(const MaterialApp(home: QRViewExample()));
 
 class QRViewExample extends StatefulWidget {
   const QRViewExample({Key? key}) : super(key: key);
@@ -42,6 +22,7 @@ class _QRViewExampleState extends State<QRViewExample> {
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
+  List<String> CheckName = [];
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
@@ -55,6 +36,12 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   Widget build(BuildContext context) {
+    // result!=null?print('##${result!.code}'):null;
+    if (result != null) {
+      if (CheckName.indexOf('${result!.code}') == -1) {
+        CheckName.add("${result!.code}");
+      }
+    }
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -62,7 +49,7 @@ class _QRViewExampleState extends State<QRViewExample> {
           Expanded(
             flex: 1,
             child: FittedBox(
-              fit: BoxFit.contain,
+              // fit: BoxFit.contain,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -76,64 +63,31 @@ class _QRViewExampleState extends State<QRViewExample> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
+                        width: 150,
+                        height: 20,
                         margin: const EdgeInsets.all(8),
                         child: ElevatedButton(
                             onPressed: () async {
-                              await controller?.toggleFlash();
-                              setState(() {});
+                              Timestamp time = Timestamp.fromDate(DateTime.now());
+                              for (var i = 0; i < CheckName.length; i++) {
+                                FirebaseFirestore.instance
+                                    .collection('students')
+                                    .doc(CheckName[i])
+                                    .collection('timeattendance')
+                                    .doc('${time.toDate().year}${time.toDate().month<10?'0${time.toDate().month}':time.toDate().month}${time.toDate().day<10?'0${time.toDate().day}':time.toDate().day}')
+                                    .set({
+                                  "state": true,
+                                  "timecheck": '${time.toDate().year}${time.toDate().month<10?'0${time.toDate().month}':time.toDate().month}${time.toDate().day<10?'0${time.toDate().day}':time.toDate().day}',
+                                });
+                              }
                             },
                             child: FutureBuilder(
                               future: controller?.getFlashStatus(),
                               builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}');
+                                return Text('ส่งรายชื่อ');
                               },
                             )),
                       ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  return Text(
-                                      'Camera facing ${describeEnum(snapshot.data!)}');
-                                } else {
-                                  return const Text('loading');
-                                }
-                              },
-                            )),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.pauseCamera();
-                          },
-                          child: const Text('pause',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.resumeCamera();
-                          },
-                          child: const Text('resume',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      )
                     ],
                   ),
                 ],
@@ -149,8 +103,8 @@ class _QRViewExampleState extends State<QRViewExample> {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
-        ? 150.0
-        : 300.0;
+        ? 750.0
+        : 500.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(

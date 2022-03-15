@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, unused_import
+
 import 'package:apptime/model/TeacherModel.dart';
 import 'package:apptime/teacher/TeaHomeScreen.dart';
 import 'package:apptime/widget/slelct_user.dart';
@@ -18,9 +20,7 @@ class _AuthenState extends State<Authen> {
   late double screen;
   late bool statusRedEye = true;
   late String user, password;
-  
 
-  
   Widget build(BuildContext context) {
     screen = MediaQuery.of(context).size.width;
     // ignore: avoid_print
@@ -39,10 +39,10 @@ class _AuthenState extends State<Authen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                MyStyle().titleH1('Time Attendance'),
-                const SizedBox(
-                  height: 50,
-                ),
+                MyStyle().showLogo(),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 BuildUser(),
                 BuildPassword(),
                 const SizedBox(
@@ -78,7 +78,7 @@ class _AuthenState extends State<Authen> {
             print('No space');
           }
         },
-        child: const Text('Login'),
+        child: const Text('Log in'),
         style: ElevatedButton.styleFrom(
           primary: MyStyle().aColor,
           shape: RoundedRectangleBorder(
@@ -173,10 +173,9 @@ class _AuthenState extends State<Authen> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: user, password: password)
           .then((value) {
-            
-              Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => SelectUser()));
-          })
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SelectUser()));
+      })
           // ignore: invalid_return_type_for_catch_error
           .catchError((value) => normalDialog(context, value.message));
     });

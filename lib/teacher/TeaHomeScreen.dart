@@ -51,13 +51,20 @@ class _TeaHomeScreenState extends State<TeaHomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('${teacherModel!.teaname}',style: TextStyle(fontSize: 30),),
+                  Text(
+                    '${teacherModel!.teaname}',
+                    style: TextStyle(fontSize: 30),
+                  ),
                   SizedBox(
                     height: 40,
                   ),
                   GestureDetector(
-                    onTap: () {Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => const QrScan()));},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const QRViewExample()));
+                    },
                     child: Container(
                         width: 160,
                         height: 160,
@@ -76,7 +83,8 @@ class _TeaHomeScreenState extends State<TeaHomeScreen> {
                             ),
                             Text(
                               "เช็คชื่อนักเรียน",
-                              style: TextStyle(color: MyStyle().wColor, fontSize: 20),
+                              style: TextStyle(
+                                  color: MyStyle().wColor, fontSize: 20),
                             )
                           ],
                         )),
